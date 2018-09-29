@@ -1,6 +1,2 @@
-!pip install cryptography
-Python 3.6
-pip install pandas
-pip install mysql-connector
-pip install xlrd
-
+contains test scripts to perform basic mapping and aggregation on data from different sources and to
+test out connections to a sql database hosted on aws using python
