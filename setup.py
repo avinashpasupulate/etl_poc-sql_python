@@ -146,6 +146,6 @@ setup(
     url='',
     license='test',
     author='avinash',
-    author_email='avinash.pasupulate@gmail.com.com',
+    author_email='avinash.pasupulate@gmail.com',
     description='test etl tool'
 )
