@@ -3,20 +3,20 @@ import pandas as pd
 import mysql.connector
 from etl_setup import *
 import os
-from etl_masterupdate import master_update
+from etl_mainupdate import main_update
 import time
 
 start_t = time.time()
 
 
 setup()
-master_update()
+main_update()
 # setting paths & file names
 raw_data = 'C:\\Users\\work-dir\\sample data\\daily_sales_data\\'
 work_path = 'C:\\Users\\misc-folder\\arch_test\\'
 connect = "jun15_sep16.csv"
 qlikview = "oct16_jul17.csv"
-master = "id_region_master.xlsx"
+main = "id_region_main.xlsx"
 
 
 host = 'localhost'
@@ -35,7 +35,7 @@ qlikview = pd.read_csv(raw_data+qlikview, date_parser=dateparser)
 
 # importing files that would be moved to a sql db
 # when moving to db take credential security into account
-region_master = pd.read_excel(work_path+master)
+region_main = pd.read_excel(work_path+main)
 
 # converting to datetime
 connect['Date'] = pd.to_datetime(connect['Date'])
@@ -48,8 +48,8 @@ qlikview['month'] = qlikview['Date'].dt.month.apply(lambda x: calendar.month_abb
 qlikview['year'] = qlikview['Date'].dt.year.astype(str)
 
 # mapping codes to location
-connect_map = connect.merge(region_master, on='Code', how='right')
-qlikview_map = qlikview.merge(region_master, on='Code', how='right')
+connect_map = connect.merge(region_main, on='Code', how='right')
+qlikview_map = qlikview.merge(region_main, on='Code', how='right')
 
 # removing multi-index
 connect_agg = (connect_map.groupby(['year', 'month', 'Code', 'region']).sum()).\
